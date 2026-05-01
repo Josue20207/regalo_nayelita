@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+
+:root {
+    --rosa-claro:  #ffffff;
+    --rosa-fuerte: #ff9aa2;
+    --texto: #5d4037;
+}
+/* --- Estilos para la Pantalla Inicial Misteriosa --- */
+
+/* 1. Importamos la fuente elegante (Dancing Script es muy popular) */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+.seccion-inicio {
+    /* 2. Centrado total usando Flexbox */
+    display: flex;
+    flex-direction: column; /* Organiza los elementos en columna (arriba, centro, abajo) */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    
+    /* Ocupa todo el alto de la pantalla */
+    height: 100vh;
+    width: 100%;
+    
+    /* Aseguramos el fondo blanco de tu referencia */
+    background-color: #ffffff;
+    
+    /* Ocultar desbordamiento para que no aparezcan barras de scroll */
+    overflow: hidden;
+    
+    /* Posicionamiento para la transición (si lo usas) */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Asegura que esté sobre todo lo demás */
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+/* Estado oculto (para el JS cuando se haga clic) */
+.seccion-inicio.hidden {
+    opacity: 0;
+    transform: translateY(-100%); /* Efecto de "subir" */
+    pointer-events: none; /* Desactiva los clics */
+}
+
+/* 3. Estilos para los Signos de Interrogación */
+.fila-signos {
+    /* Aplicamos la fuente elegante importada */
+    font-family: 'Dancing Script', cursive;
+    
+    /* Un rosa suave como el de la referencia original */
+    color: #ff9aa2; 
+    
+    /* Tamaño grande y separación entre signos */
+    font-size: 3.5rem;
+    letter-spacing: 2rem; /* Espacio entre los signos */
+    
+    /* Aseguramos que los signos no se muevan de su sitio */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0; /* Espacio arriba y abajo */
+}
+
+/* 4. Estilos para la Imagen de Portada */
+#boton-entrar {
+    /* Aseguramos que el enlace no tenga subrayados y tenga buen espacio */
+    display: block;
+    text-decoration: none;
+    margin: 50px 0; /* Más espacio entre la imagen y los signos */
+}
+
+.imagen-portada {
+    /* Ajusta el tamaño máximo de la imagen */
+    max-width: 400px;
+    height: auto;
+    
+    /* Opcional: Bordes redondeados y una sombra suave para que resalte */
+    border-radius: 25px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    
+    /* Transición suave para el efecto hover */
+    transition: transform 0.3s ease;
+}
+
+/* Efecto al pasar el mouse por encima de la imagen */
+.imagen-portada:hover {
+    transform: scale(1.05) rotate(2deg); /* Se agranda un poco y gira */
+}
+
+/* --- Fin de Estilos para la Pantalla Inicial --- */
+
+body {
+    background-color: var(--rosa-claro);
+    margin: 0;
+    overflow: hidden; /* Evita que salgan barras de scroll durante las animaciones */
+    font-family: sans-serif;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* --- ESTADOS DE VISIBILIDAD --- */
+.hidden {
+    display: none !important;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--rosa-claro);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* --- FASE 2: TEXTO CURSIVO --- */
+.cursiva {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4.5rem;
+    color: #d81b60;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* --- FASE 3: MENÚ DE CLIPS --- */
+.menu-container {
+    display: flex;
+    gap: 40px;
+}
+
+.clip-item {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    text-align: center;
+}
+
+.clip-item:hover {
+    transform: translateY(-10px) rotate(3deg);
+}
+
+.icon {
+    font-size: 60px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* --- MODAL DE CONTENIDO FINAL --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 200;
+    padding: 40px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#closeModal {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background: var(--rosa-fuerte);
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+/* --- ANIMACIONES --- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes girar {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.disco-animado {
+    animation: girar 3s linear infinite;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;500&display=swap');
+
+:root {
+    --color-fondo: #b22d30; /* El rojo intenso de la referencia */
+    --color-texto: #ffffff;
+    --fuente-etiqueta: 'Poppins', sans-serif;
+}
+
+/* Estilo para la Fase 3 - Menú de Opciones */
+.overlay-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #b22d30; /* El rojo de tu imagen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.menu-outer-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Alinea los contenedores por la base */
+    gap: 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.clip-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    
+    /* ESTO QUITA EL CUADRO BLANCO */
+    background: none !important; 
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+.menu-icon {
+    height: 150px; /* Mantén la altura para que estén nivelados */
+    width: auto;
+    object-fit: contain;
+    /* Esto añade una sombra solo a la forma del icono, no al cuadro */
+    filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.4)); 
+    margin-bottom: 15px;
+}
+
+.label {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* Mejora la lectura sobre el rojo */
+}
+
+/* --- Ajustes para dispositivos móviles --- */
+@media (max-width: 768px) {
+    .menu-outer-wrapper {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .menu-icon {
+        width: 120px;
+    }
+}
