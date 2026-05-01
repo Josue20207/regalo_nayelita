@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para Nayelita <3</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;500&family=Great+Vibes&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- ESTILOS BASE --- */
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; min-height: 100vh;
+            background-color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        .fase {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            display: none; 
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .fase.activa { display: flex; }
+
+        /* --- TIPOGRAFÍA --- */
+        .elegante { 
+            font-family: 'Great Vibes', cursive; 
+            color: white; 
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.1); 
+        }
+        .cuerpo-elegante { 
+            font-family: 'Great Vibes', cursive; 
+            color: white; 
+            font-size: 2.4rem; 
+            line-height: 1.5;
+        }
+
+        /* --- FASE 2: FOTO AMIGA CON FILTRO --- */
+        .foto-fondo {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        .overlay-rosa {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(255, 154, 162, 0.6); 
+            z-index: 2;
+        }
+        .contenido-foto { position: relative; z-index: 3; }
+
+        /* --- FASE 3: MENÚ DE ICONOS --- */
+        .fondo-rosado { background-color: #ff9aa2; }
+        
+        .menu-outer-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            max-width: 900px;
+        }
+        .clip-item {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .clip-item:hover { transform: scale(1.1); }
+        .menu-icon { width: 100%; filter: drop-shadow(0 8px 15px rgba(0,0,0,0.15)); }
+        .label { color: white; margin-top: 10px; font-weight: 500; font-size: 0.9rem; }
+
+        /* --- SUB-SECCIONES --- */
+        .sub-seccion {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+        .sub-seccion.sub-activa { display: flex; opacity: 1; }
+
+        /* SECCIÓN FLOR VINTAGE */
+        .contenedor-flor-vintage {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            max-width: 950px;
+            width: 90%;
+        }
+        .foto-vintage-marco {
+            background: white;
+            padding: 12px 12px 45px 12px;
+            box-shadow: 8px 8px 20px rgba(0,0,0,0.15);
+            transform: rotate(-3deg);
+            flex: 0 0 280px;
+        }
+        .img-vintage-flor { width: 100%; height: 350px; object-fit: cover; }
+
+        /* --- CARRUSEL DE RECUERDOS (10 FOTOS) --- */
+        .carrusel-container {
+            width: 100%;
+            overflow: hidden;
+            padding: 30px 0;
+            position: relative;
+        }
+        .carrusel-track {
+            display: flex;
+            width: calc(250px * 20); /* Espacio para las 10 fotos duplicadas para el loop */
+            animation: scroll 30s linear infinite;
+        }
+        .carrusel-track:hover { animation-play-state: paused; }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-250px * 10)); }
+        }
+
+        .foto-carrusel-item {
+            flex: 0 0 210px;
+            margin: 0 15px;
+            background: white;
+            padding: 10px 10px 40px 10px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.15);
+            /* Rotaciones aleatorias para estilo vintage */
+        }
+        .foto-carrusel-item:nth-child(odd) { transform: rotate(-2deg); }
+        .foto-carrusel-item:nth-child(even) { transform: rotate(2deg); }
+
+        .img-carrusel { width: 100%; height: 260px; object-fit: cover; }
+
+        /* --- NUEVO: REPRODUCTOR VINILO --- */
+        .vinilo-wrapper {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .vinilo-disco {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        /* Animación de giro */
+        .girando {
+            animation: girarVinilo 4s linear infinite;
+        }
+
+        @keyframes girarVinilo {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cancion-info { color: white; font-size: 0.9rem; font-weight: 500; }
+        .btn-volver {
+            background: white;
+            color: #ff9aa2;
+            border: none;
+            padding: 10px 35px;
+            border-radius: 25px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 850px) {
+            .contenedor-flor-vintage { flex-direction: column; }
+            .elegante { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+    
+<div id="fase1" class="fase activa" style="opacity: 1;" onclick="irA('fase1', 'fase2')">
+        <div class="sobre-contenedor">
+            <img src="tata.png" alt="Abrir carta" class="imagen-click-sobre">
+            <h1 class="texto-instruccion">Toca para abrir la carta</h1>
+        </div>
+    </div>
+
+    <div id="fase2" class="fase" onclick="irA('fase2', 'fase3')">
+        <img src="nayelitahermosa.jpeg" class="foto-fondo">
+        <div class="overlay-rosa"></div>
+        <div class="contenido-foto">
+            <h1 class="elegante" style="font-size: 4.5rem; margin: 0;">¡Feliz Cumpleaños<br>Nayelita!</h1>
+        </div>
+    </div>
+
+    <div id="fase3" class="fase fondo-rosado">
+        <h2 class="elegante" style="font-size: 3rem; margin-bottom: 40px;">Para ti ❤️</h2>
+        <div class="menu-outer-wrapper">
+            <div class="clip-item" onclick="mostrarSeccion('mensaje')">
+                <img src="carta.png" class="menu-icon">
+                <span class="label">Message</span>
+            </div>
+            <div class="clip-item" onclick="mostrarSeccion('flor')">
+                <img src="flor.png" class="menu-icon">
+                <span class="label">Flower</span>
+            </div>
+            <div class="clip-item" onclick="mostrarSeccion('recuerdos')">
+                <img src="recuerdo.png" class="menu-icon">
+                <span class="label">Cake</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="fase4" class="fase fondo-rosado">
+        
+        <div id="sub-mensaje" class="sub-seccion">
+            <div class="contenedor-flor-vintage">
+                <div class="foto-vintage-marco">
+                    <img src="mayo.jpeg" class="img-vintage-flor">
+                </div>
+                <div style="flex: 1; text-align: left;">
+                    <h1 class="elegante" style="font-size: 3.2rem;">¡Feliz Cumpleaños!</h1>
+                    <p class="cuerpo-elegante">"espero que este dia"</p>
+                </div>
+            </div>
+            <button class="btn-volver" onclick="volverAlMenu()">Volver</button>
+        </div>
+
+        <div id="sub-flor" class="sub-seccion">
+            <div class="contenedor-flor-vintage">
+                <div class="foto-vintage-marco">
+                    <img src="girasol.jpg" class="img-vintage-flor">
+                </div>
+                <div style="flex: 1; text-align: left;">
+                    <h1 class="elegante" style="font-size: 3.2rem;">Para mi Girasol</h1>
+                    <p class="cuerpo-elegante">"sihwdhwhdehf"</p>
+                </div>
+            </div>
+            <button class="btn-volver" onclick="volverAlMenu()">Volver</button>
+        </div>
+
+        <div id="sub-recuerdos" class="sub-seccion">
+            <h1 class="elegante" style="font-size: 3rem;">Instantes Eternos</h1>
+            
+            <div class="carrusel-container">
+                <div class="carrusel-track">
+                    <div class="foto-carrusel-item"><img src="nayelita1.1.jpeg" class="img-carrusel"></div>
+                    <div class="foto-carrusel-item"><img src="nayelita2.jpeg" class="img-carrusel"></div>
+                    <div class="foto-carrusel-item"><img src="nayelita3.jpeg" class="img-carrusel"></div>
+                    <div class="foto-carrusel-item"><img src="nayelita4.jpeg" class="img-carrusel"></div>
+                    <div class="foto-carrusel-item"><img src="nayelita5.jpeg" class="img-carrusel"></div>
+                    <div class="foto-carrusel-item"><img src="nayelita6.jpeg" class="img-carrusel"></div>
+                    <div class="foto-carrusel-item"><img src="nayelita7.jpeg" class="img-carrusel"></div>
+                    <div class="foto-carrusel-item"><img src="nayelita8.jpeg" class="img-carrusel"></div>
+                    <div class="foto-carrusel-item"><img src="nayelita9.jpeg" class="img-carrusel"></div>
+                    <div class="foto-carrusel-item"><img src="nayelita1.jpeg" class="img-carrusel"></div>
+                    <div class="foto-carrusel-item"><img src="nayelita10.jpeg" class="img-carrusel"></div>
+                    <div class="foto-carrusel-item"><img src="nayelita11.jpeg" class="img-carrusel"></div>
+                    
+            
+                </div>
+            </div>
+
+            <div class="vinilo-wrapper">
+                <audio id="miAudio" src="tu-cancion.mp3"></audio>
+                <img src="vinilo.png" id="disco" class="vinilo-disco" onclick="toggleMusica()">
+                <div class="cancion-info" id="status">Toca el disco para reproducir 🎵</div>
+            </div>
+
+            
+            <button class="btn-volver" onclick="volverAlMenu()">Volver</button>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('miAudio');
+        const disco = document.getElementById('disco');
+        const statusText = document.getElementById('status');
+
+        function toggleMusica() {
+            if (audio.paused) {
+                audio.play();
+                disco.classList.add('girando');
+                statusText.innerText = "Reproduciendo ahora... ✨";
+            } else {
+                audio.pause();
+                disco.classList.remove('girando');
+                statusText.innerText = "Pausado";
+            }
+        }
+        
+        function irA(IDactual, IDsiguiente) {
+            const actual = document.getElementById(IDactual);
+            const siguiente = document.getElementById(IDsiguiente);
+            actual.style.opacity = "0";
+            setTimeout(() => {
+                actual.classList.remove('activa');
+                siguiente.classList.add('activa');
+                setTimeout(() => { siguiente.style.opacity = "1"; }, 50);
+            }, 800);
+        }
+
+        function mostrarSeccion(tipo) {
+            const menu = document.getElementById('fase3');
+            const contenedor = document.getElementById('fase4');
+            const sub = document.getElementById('sub-' + tipo);
+            menu.style.opacity = "0";
+            setTimeout(() => {
+                menu.classList.remove('activa');
+                contenedor.classList.add('activa');
+                contenedor.style.opacity = "1";
+                sub.classList.add('sub-activa');
+                setTimeout(() => { sub.style.opacity = "1"; }, 50);
+            }, 800);
+        }
+
+        function volverAlMenu() {
+            const contenedor = document.getElementById('fase4');
+            const menu = document.getElementById('fase3');
+            contenedor.style.opacity = "0";
+            setTimeout(() => {
+                contenedor.classList.remove('activa');
+                document.querySelectorAll('.sub-seccion').forEach(s => s.classList.remove('sub-activa'));
+                menu.classList.add('activa');
+                setTimeout(() => { menu.style.opacity = "1"; }, 50);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
